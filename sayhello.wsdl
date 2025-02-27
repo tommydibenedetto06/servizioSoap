@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Questo è un file WSDL che descrive il contratto del servizio SOAP -->
+
+
+<!-- Nome del servizio -->
+        <!-- Spazio dei nomi del servizio -->
+        <!-- Alias per lo spazio dei nomi -->
+        <!-- Namespace SOAP -->
+        <!-- Namespace per i tipi XML Schema -->
+        <!-- Namespace per la codifica SOAP -->
+        <!-- Namespace per WSDL -->
+        <!-- Namespace principale per WSDL -->
+
+        
+<definitions name="test"  
+             targetNamespace="http://localhost/soap"  
+             xmlns:tns="http://localhost/soap"  
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"  
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"  
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"  
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"  
+             xmlns="http://schemas.xmlsoap.org/wsdl/">  
+
+    <!-- Definizione dei messaggi -->
+    <message name="sayHelloRequest">
+        <!-- Messaggio di richiesta, contiene il parametro "name" -->
+        <part name="name" type="xsd:string"/>
+    </message>
+    
+    <message name="sayHelloResponse">
+        <!-- Messaggio di risposta, contiene il saluto "salutation" -->
+        <part name="salutation" type="xsd:string"/>
+    </message>
+
+    <!-- Definizione del portType (tipo di operazione) -->
+    <portType name="sayHelloPortType">
+        <operation name="sayHello">
+            <!-- Operazione che accetta una richiesta e restituisce una risposta -->
+            <input message="tns:sayHelloRequest" />
+            <output message="tns:sayHelloResponse" />
+        </operation>
+    </portType>
+
+    <!-- Binding per il servizio, specifica il protocollo SOAP da usare -->
+    <binding name="sayHelloBinding" type="tns:sayHelloPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        
+        <operation name="sayHello">
+            <soap:operation soapAction="" />
+            <input>
+                <!-- Definizione del formato della richiesta -->
+                <soap:body use="encoded" namespace="" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <!-- Definizione del formato della risposta -->
+                <soap:body use="encoded" namespace="" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Definizione del servizio -->
+    <service name="sayHelloService">
+        <port name="sayHelloPort" binding="sayHelloBinding">
+            <!-- Indirizzo del servizio (dove il server SOAP è in ascolto) -->
+            <soap:address location="http://localhost/server.php" />
+        </port>
+    </service>
+</definitions>
